@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "Hospital",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 104 }, "geometry": { "type": "MultiPoint", "coordinates": [ [ -84.266517151476222, 41.094869923842843 ] ] } }
+]
+}

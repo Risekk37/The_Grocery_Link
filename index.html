@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Map</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.css">
+</head>
+<body>
+    <div id="upperbar">
+        <div id="Main_name">Delivery Desert</div>
+        <div id="Main_tabs">
+            <div class="Main_tab">About</div>
+            <div class="Main_tab">Suburbs</div>
+            <div class="Main_tab">Cities</div>
+            <div class="Main_tab">Beyond</div>
+        </div>
+    </div>
+    <div id="sidebar">
+        <div id="sidebar-content">
+            <div class="Sidebar_Name"></div>
+            <div class="Sidebar_Main_Content">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>
+            <div class="Sidebar_Name_Line"></div>
+            <div id="sidebar-sub-content">
+                <div class="sub-button">Delivery</div>
+                <div class="sub-button">Food</div>
+                <div class="sub-button">Reference</div>
+            </div>
+            <div class="category"></div>
+            <iframe id="iframeContainer" src="Graph/index.html" title="Graph" sandbox="allow-scripts allow-same-origin"></iframe>
+            <img id="Food_desert" src="food_desert.png" alt="food_desert_research" />
+            <div id="Display_button">Map / Photo</div>
+            <div id="layercheckboxcontainer">
+                <div class="layer-checkbox-container">
+                    <label class="layer-checkbox-label">
+                    <input type="checkbox" id="undelivery-zone" class="layer-checkbox">
+                    <span class="layer-checkbox-text">Undelivery Zone</span>
+                    </label>
+                    <p class="layer-checkbox-description">Areas where grocery delivery is not available</p>
+                    <label class="layer-checkbox-label">
+                    <input type="checkbox" id="food-desert" class="layer-checkbox">
+                    <span class="layer-checkbox-text">Food Desert</span>
+                    </label>
+                    <p class="layer-checkbox-description">Areas where the nearest grocery store is more than 10 miles away</p>
+                    <label class="layer-checkbox-label">
+                    <input type="checkbox" id="1k-population" class="layer-checkbox">
+                    <span class="layer-checkbox-text">1K Population</span>
+                    </label>
+                    <p class="layer-checkbox-description">Areas with a population of over 1,000 residents</p>
+                </div>
+            </div>
+            <div id="categoryContainer">
+                <div class="category-grid">
+                    <label class="category-item">
+                        <div class="category_flex">
+                            <input type="checkbox" name="category" value="income">
+                            <span class="category-title">Income Level</span>
+                        </div>
+                            <span class="category-desc">Areas with a poverty rate higher than the U.S. average of 11%</span>
+                        
+                    </label>
+                    <label class="category-item">
+                        <div class="category_flex">
+                        <input type="checkbox" name="category" value="transportation">
+                            <span class="category-title">Public Transportation</span>
+                        </div>
+                            <span class="category-desc">Areas without public transportation</span>
+                        
+                    </label>
+                    <label class="category-item">
+                        <div class="category_flex">
+                        <input type="checkbox" name="category" value="road">
+                            <span class="category-title">Road Infrastructure</span>
+                        </div>
+                            <span class="category-desc">Areas where roads are unpaved</span>
+                        
+                    </label>
+                    <label class="category-item">
+                        <div class="category_flex">
+                        <input type="checkbox" name="category" value="restaurant">
+                            <span class="category-title">Restaurants and Cafe</span>
+                        </div>    
+                        <span class="category-desc">Areas without restaurants or cafés</span>
+                        
+                    </label>
+                    <label class="category-item">
+                        <div class="category_flex">
+                        <input type="checkbox" name="category" value="agriculture">
+                            <span class="category-title">Agricultural Land</span>
+                        </div>    
+                        <span class="category-desc">Areas surrounded by farmland</span>
+                        
+                    </label>
+                    <label class="category-item">
+                        <div class="category_flex">
+                        <input type="checkbox" name="category" value="distance">
+                            <span class="category-title">Distance, Nearest Urban</span>
+                        </div>    
+                        <span class="category-desc">Areas where the nearest city is more than 100 miles away</span>
+                        
+                    </label>
+                    <label class="category-item">
+                        <div class="category_flex">
+                        <input type="checkbox" name="category" value="barriers">
+                            <span class="category-title">Geographical Barriers</span>
+                        </div>    
+                        <span class="category-desc">Areas blocked by natural features such as mountains and rivers</span>
+                        
+                    </label>
+                    <label class="category-item">
+                        <div class="category_flex">
+                        <input type="checkbox" name="category" value="grocery">
+                            <span class="category-title">More Remote Grocery</span>
+                        </div>    
+                        <span class="category-desc">Areas where the nearest grocery market is more than 15 miles away</span>
+                        
+                    </label>
+                    <label class="category-item">
+                        <div class="category_flex">
+                        <input type="checkbox" name="category" value="Facilities">
+                            <span class="category-title">Essential Facilities</span>
+                        </div>    
+                        <span class="category-desc">Areas without essential facilities like hospitals, post offices, or community centers</span>
+                        
+                    </label>
+                </div>
+            </div>
+            <div class="sub-content">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                Where does it come from?
+                Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+            </div>
+        </div>    
+    </div>
+    <div id="imageGridContainer"> <!-- Add a container div to wrap the content -->
+        <div class="container" id="imageGrid"></div>
+      </div>
+    <div id="Main_map"></div>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
