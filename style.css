@@ -32,8 +32,18 @@ html, body {
     font-size: 24px;
     Font-weight: 1000;
     color:#0000008f;
+    padding: 10px;
+    z-index: 15;
+}
+
+#Main_sub_name {
+    position: absolute;
+    font-size: 15px;
+    Font-weight: 500;
+    color:#0000008f;
     padding: 14px;
     z-index: 15;
+    margin-top: 25px;
 }
 
 #Main_tabs {
@@ -44,7 +54,7 @@ html, body {
     gap: 50px; /* 탭 간격 */
     padding-bottom: 5px; /* 밑줄과 여백 */
     padding: 14px;
-    Margin-left: 250px;
+    Margin-left: 300px;
     z-index: 15;
 }
 

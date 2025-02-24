@@ -17,7 +17,7 @@ const layerSettings = {
     deliveryfood: { color: '#FABF1D', opacity: 0, outlineColor: '#ffffff', outlineWidth: 0.15, outlineOpacity: 0.9,  outlineOffset:0 },
     fooddemography: { color: '#F215FA', opacity: 0, outlineColor: '#ffffff', outlineWidth: 0.15, outlineOpacity: 0.9,  outlineOffset:0 },
     pick_3: { color: '#ff3600', opacity: 0.5, outlineColor: '#ffffff', outlineWidth: 0.5, outlineOpacity: 1, outlineOffset: -0.5 },
-    Usa_All_C: { color: '#ff3600', opacity: 0.5, outlineColor: '#ffffff', outlineWidth: 0.01, outlineOpacity: 0.9, outlineOffset: 0 }
+    Usa_All_C: { color: '#ff3600', opacity: 0, outlineColor: '#ffffff', outlineWidth: 0.01, outlineOpacity: 0, outlineOffset: 0 }
 };
 
 const hoverLayers = ['delivery', 'demography', 'food', 'deliveryfood', 'fooddemography'];
