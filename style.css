@@ -12,6 +12,12 @@ html, body {
     left: 0vw;
 }
 
+#Cities_map {
+    width: 80vw;
+    height: 100vh;
+    left: 0vw;
+}
+
 .mapboxgl-ctrl-logo {
     display: none !important;
 }

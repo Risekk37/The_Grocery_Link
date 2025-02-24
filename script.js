@@ -9,6 +9,13 @@ const Main_map = new mapboxgl.Map({
     attributionControl: false
 });
 
+const Cities_map = new mapboxgl.Map({
+    container: 'Cities_map',
+    style: 'mapbox://styles/kit3775/cm7hvhz9g00kw01qod6lv4rzb',
+    center: [-96.35, 38.50], 
+    zoom: 3.95, 
+    attributionControl: false
+});
 
 const layerSettings = {
     delivery: { color: '#001e24', opacity: 0.07, outlineColor: '#ffffff', outlineWidth: 0.15, outlineOpacity: 0.9,  outlineOffset:0 },
@@ -16,8 +23,14 @@ const layerSettings = {
     food: { color: '#cd4e1c', opacity: 0.07, outlineColor: '#ffffff', outlineWidth: 0.15, outlineOpacity: 0.9,  outlineOffset:0 },
     deliveryfood: { color: '#FABF1D', opacity: 0, outlineColor: '#ffffff', outlineWidth: 0.15, outlineOpacity: 0.9,  outlineOffset:0 },
     fooddemography: { color: '#F215FA', opacity: 0, outlineColor: '#ffffff', outlineWidth: 0.15, outlineOpacity: 0.9,  outlineOffset:0 },
-    pick_3: { color: '#ff3600', opacity: 0.5, outlineColor: '#ffffff', outlineWidth: 0.5, outlineOpacity: 1, outlineOffset: -0.5 },
-    Usa_All_C: { color: '#ff3600', opacity: 0, outlineColor: '#ffffff', outlineWidth: 0.01, outlineOpacity: 0, outlineOffset: 0 }
+    pick_3: { color: '#ff3600', opacity: 0.5, outlineColor: '#ffffff', outlineWidth: 0.5, outlineOpacity: 1, outlineOffset: -0.5 }
+};
+
+const layerSettings_city = {
+    Usa_All_C: { color: '#ff3600', opacity: 0.2, outlineColor: '#ff3600', outlineWidth: 0.5, outlineOpacity: 1, outlineOffset: 0 },
+    Outcome_All: { color: '#ff3600', opacity: 0.33, outlineColor: '#ffffff', outlineWidth: 0.5, outlineOpacity: 1, outlineOffset: -0.5 },
+    Poverty_All: { color: '#001e24', opacity: 0.2, outlineColor: '#ffffff', outlineWidth: 0.15, outlineOpacity: 0.9,  outlineOffset:0 },
+    Food_All: { color: '#cd4e1c', opacity: 0.2, outlineColor: '#ffffff', outlineWidth: 0.15, outlineOpacity: 0.9,  outlineOffset:0 }
 };
 
 const hoverLayers = ['delivery', 'demography', 'food', 'deliveryfood', 'fooddemography'];
@@ -67,7 +80,41 @@ Main_map.on('load', () => {
             }
         });
     });
+});
 
+Cities_map.on('load', () => {
+    Object.keys(layerSettings_city).forEach(layer => {
+        let dataPath = `City/${layer}.geojson`; // 기본 경로 설정
+        
+
+        Cities_map.addSource(layer, {
+            type: 'geojson',
+            data: dataPath
+        });
+        Cities_map.addLayer({
+            id: layer,
+            type: 'fill',
+            source: layer,
+            layout: {},
+            paint: {
+                'fill-color': layerSettings_city[layer].color, 
+                'fill-opacity': layerSettings_city[layer].opacity 
+            }
+        });
+        Cities_map.addLayer({
+            id: `${layer}-outline`,
+            type: 'line',
+            source: layer,
+            layout: {},
+            paint: {
+                'line-color': layerSettings_city[layer].outlineColor, 
+                'line-width': layerSettings_city[layer].outlineWidth, 
+                'line-opacity': layerSettings_city[layer].outlineOpacity, 
+                'line-offset': layerSettings_city[layer].outlineOffset
+            }
+        }); 
+    });
+});
     
 
     // Popup 요소 생성
@@ -88,8 +135,7 @@ popupStyle.innerHTML = `
     color: white !important; /* X 버튼을 흰색으로 변경 */
     opacity: 1 !important; /* 투명도 제거 */
     font-weight: bold !important; /* 글씨 굵게 */
-    }
-`;
+    }`;
 document.head.appendChild(popupStyle);
 
 Main_map.on('click', 'pick_3_layer', function (e) {
@@ -311,7 +357,7 @@ document.getElementById('1k-population').addEventListener('change', function() {
         Main_map.setPaintProperty('demography', 'fill-opacity', layerSettings.demography.opacity); // 체크 해제 시 원래 값으로
     }
 });
-    });
+
 
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -327,7 +373,9 @@ document.getElementById('1k-population').addEventListener('change', function() {
         const sidebar = document.getElementById("sidebar"); // sidebar 요소 가져오기
         const fooddesert = document.getElementById("Food_desert");
         const layercheck = document.getElementById("layercheckboxcontainer");
-        
+        const mainMap = document.getElementById("Main_map");  // Main_map 요소
+        const citiesMap = document.getElementById("Cities_map");  // Cities_map 요소
+
         // Main 탭별 콘텐츠 설정
         const mainContentData = {
             "About": {
@@ -352,12 +400,12 @@ document.getElementById('1k-population').addEventListener('change', function() {
             },
             "Cities": {
                 name: "Cities",
-                content: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                content: "In urban areas, while grocery delivery services are generally available in most neighborhoods, food deserts still persist in specific zones. These areas are typically defined by the lack of grocery stores within a 1-mile radius, creating significant challenges for residents. When food deserts overlap with high-poverty populations, the situation becomes even more critical. Low-income residents may face higher delivery fees, which adds a financial burden and potentially deters them from using grocery delivery services. Consequently, the barrier to accessing groceries becomes more pronounced, exacerbating food insecurity in already vulnerable communities. This chapter delves into the issue of food deserts in cities, analyzing the overlap with poverty-stricken areas and exploring how the interaction of these factors creates deeper food access inequalities.",
                 subButtons: ["C_Where", "C_Conditions", "Lorem"],
                 subContent: {
-                    "C_Where": "인터넷 서비스 정보입니다.",
-                    "C_Conditions": "교통 서비스 정보입니다.",
-                    "Lorem": "의료 서비스 정보입니다."
+                    "C_Where": "Function and detail will be made.",
+                    "C_Conditions": "Zoom in to city plz.. this don't have function yet..",
+                    "Lorem": "nothing yet"
                 }
             },
             "Beyond": {
@@ -448,6 +496,72 @@ document.getElementById('1k-population').addEventListener('change', function() {
                             } else {
                                 fooddesert.style.display = "none";  // "Rural"이 아닌 경우 숨기기
                             }
+                            if (buttonText === "C_Where") {
+                                const layersToChange = ['Outcome_All', 'Food_All', 'Poverty_All'];
+                                layersToChange.forEach(layer => {
+                                    Cities_map.setPaintProperty(layer, 'fill-opacity', 0);
+                                    Cities_map.setPaintProperty(`${layer}-outline`, 'line-opacity', 0);
+                                });
+                                const layersToChange2 = ['Usa_All_C'];
+                                layersToChange2.forEach(layer => {
+                                Cities_map.setPaintProperty(layer, 'fill-opacity', layerSettings_city[layer].opacity );
+                                Cities_map.setPaintProperty(`${layer}-outline`, 'line-opacity', layerSettings_city[layer].outlineOpacity);
+                            });
+                                // 각 요소 클릭 시 id를 통해 flyTo 수행
+                                const usaAllCLayer = Cities_map.getLayer('Usa_All_C');
+                                if (usaAllCLayer) {
+                                    usaAllCLayer.on('click', function (e) {
+                                        // 클릭된 요소의 id를 추출 (예: id는 e.features[0].properties.id)
+                                        const cityId = e.features[0].properties.id;
+
+                                        // 해당 id에 맞는 좌표를 지정
+                                        const cityCoordinates = {
+                                            1: { lat: 32.697806, lng: -117.059776, zoom: 10 }, // Example: San Francisco
+                                            2: { lat: 34.011951, lng: -118.167152, zoom: 10 },  // Example: New York
+                                            3: { lat: 37.366144, lng: -121.959600, zoom: 10 }, // Example: Los Angeles
+                                            4: { lat: 29.413558, lng: -98.502092, zoom: 10 },  // Example: Chicago
+                                            5: { lat: 29.808382, lng: -95.447899, zoom: 10 },  // Example: Houston
+                                            6: { lat: 32.808241, lng: -96.874070, zoom: 10 },   // Example: London
+                                            7: { lat: 33.430145, lng: -112.020377, zoom: 10 },    // Example: Paris
+                                            8: { lat: 39.805926, lng: -75.428836, zoom: 10 },   // Example: Berlin
+                                            9: { lat: 40.634650, lng: -74.300181, zoom: 10 },  // Example: Tokyo
+                                            10: { lat: 41.837555, lng: -87.833305, zoom: 10 }   // Example: Moscow
+                                        };
+
+                                        // 선택된 cityId에 맞는 경위도를 찾아 flyTo
+                                        const { lat, lng, zoom } = cityCoordinates[cityId];
+
+                                        // C_Conditions로 변경 후 flyTo 실행
+                                        button.classList.remove("active");  // "C_Where"에서 "C_Conditions"로 변경
+                                        const conditionsButton = document.querySelector('[data-button="C_Conditions"]');
+                                        if (conditionsButton) {
+                                            conditionsButton.classList.add("active");
+                                        }
+
+                                        Cities_map.flyTo({
+                                            center: [lng, lat],
+                                            zoom: zoom,
+                                            speed: 0.5,  // Adjust the speed of the zoom animation
+                                            curve: 1,    // Adjust the curve of the zoom animation
+                                            easing: (t) => t, // Easing function for smooth zoom
+                                        });
+                                    });
+                                }
+                            } else {}
+                        
+                            
+                            if (buttonText === "C_Conditions") {
+                                const layersToChange =['Usa_All_C']; 
+                                layersToChange.forEach(layer => {
+                                    Cities_map.setPaintProperty(layer, 'fill-opacity', 0);
+                                    Cities_map.setPaintProperty(`${layer}-outline`, 'line-opacity', 0);
+                                });
+                                const layersToChange2 = ['Outcome_All', 'Food_All', 'Poverty_All'];
+                                layersToChange2.forEach(layer => {
+                                Cities_map.setPaintProperty(layer, 'fill-opacity', layerSettings_city[layer].opacity );
+                                Cities_map.setPaintProperty(`${layer}-outline`, 'line-opacity', layerSettings_city[layer].outlineOpacity);
+                            });
+                            } else {}
                             
                         });
                     });
@@ -481,6 +595,8 @@ document.getElementById('1k-population').addEventListener('change', function() {
                     }
                     if (selectedTab =="Suburbs") {
                         layercheck.style.display = "block"; 
+                        mainMap.style.display = "block";
+                        citiesMap.style.display = "none";
                          // 🔹 opacity 변경 기능 추가
                          const layersToChange = ['delivery', 'food', 'demography', 'pick_3'];
                          layersToChange.forEach(layer => {
@@ -491,6 +607,8 @@ document.getElementById('1k-population').addEventListener('change', function() {
                         layercheck.style.display = "none";
                     }
                     if (selectedTab =="Cities") {
+                        mainMap.style.display = "none";
+                        citiesMap.style.display = "block";
                          // 🔹 opacity 변경 기능 추가
                          const layersToChange = ['delivery', 'food', 'demography', 'pick_3'];
                          layersToChange.forEach(layer => {
