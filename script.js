@@ -1731,6 +1731,7 @@ function resetDisplayButton() {
                         categoryCity.style.display = "none";
                         storyNavigation.style.display = "none";
                         subContent.style.display= "block";
+                        subButtonsContainer.style.display ="flex";
                     }
 
                     if (selectedTab =="About") {
