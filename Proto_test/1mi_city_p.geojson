@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "1mi_city_p",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 1 }, "geometry": { "type": "Point", "coordinates": [ -73.78865663480569, 41.102665297733672 ] } }
+]
+}

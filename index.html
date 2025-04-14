@@ -6,19 +6,156 @@
     <title>Custom Map</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.css">
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/venn.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+</head>
 </head>
 <body>
+    <!-- The existing HTML structure works for both guides -->
+<div id="access-void-guide-overlay" class="guide-overlay">
+    <!-- 진행 상황 표시 -->
+    <div class="guide-progress" id="access-void-guide-progress">
+        <!-- JavaScript로 동적 생성 -->
+    </div>
+    
+    <!-- 가이드 마커들 (위치는 JavaScript에서 동적으로 설정) -->
+    <div class="guide-marker" id="guide-marker-1">
+        <div class="guide-number">1</div>
+        <div class="guide-content">
+            <h3>Map Interaction</h3>
+            <p>Hover or click on the map to view details by area.</p>
+        </div>
+    </div>
+    
+    <div class="guide-marker" id="guide-marker-2">
+        <div class="guide-number">2</div>
+        <div class="guide-content">
+            <h3>Select a State</h3>
+            <p>Choose a state to explore it in detail.</p>
+        </div>
+    </div>
+    
+    <div class="guide-marker" id="guide-marker-3">
+        <div class="guide-number">3</div>
+        <div class="guide-content">
+            <h3>Search Location</h3>
+            <p>Enter an address to jump to a specific location.</p>
+        </div>
+    </div>
+    
+    <div class="guide-marker" id="guide-marker-4">
+        <div class="guide-number">4</div>
+        <div class="guide-content">
+            <h3>Image Grid</h3>
+            <p>Click "Map/Photo" to view satellite images of Access_Void areas.</p>
+        </div>
+    </div>
+    
+    <div class="guide-marker" id="guide-marker-5">
+        <div class="guide-number">5</div>
+        <div class="guide-content">
+            <h3>Indicator Chart</h3>
+            <p>Hover or click the chart to explore food deserts and delivery access.</p>
+        </div>
+    </div>
+    
+    <div class="guide-marker" id="guide-marker-6">
+        <div class="guide-number">6</div>
+        <div class="guide-content">
+            <h3>Filter Slider</h3>
+            <p>Adjust the sliders to filter areas by population and poverty rate.</p>
+        </div>
+    </div>
+    
+    <div class="guide-marker" id="guide-marker-7">
+        <div class="guide-number">7</div>
+        <div class="guide-content">
+            <h3>Factor Filter</h3>
+            <p>Filter Access_Void areas by factors like transport and road access.</p>
+        </div>
+    </div>
+    
+    <!-- 컨트롤 버튼 -->
+    <div class="guide-controls">
+        <button id="guide-prev" class="guide-button">Back</button>
+        <button id="guide-next" class="guide-button primary">Next</button>
+        <button id="guide-close" class="guide-button">Skip</button>
+    </div>
+</div>
+
+<!-- 튜토리얼 다시보기 버튼 -->
+<div id="access-void-guide-replay-container" class="guide-replay-container">
+    <button id="access-void-guide-replay" class="guide-replay-button">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polygon points="10 8 16 12 10 16 10 8"></polygon>
+        </svg>
+        Guide
+    </button>
+</div>
+    <div id="Display_button">Map / Photo</div>
+    <div id="states-dropdown-container">
+        <select id="states-dropdown">
+          <option value="reset" selected>Select States</option>
+          <!-- 주 목록은 JavaScript로 채워질 것입니다 -->
+        </select>
+    </div>
+    <div id="dropdown">
+        <select id="dropdown-button">
+            <option value="">Select the City</option>
+            <option value="NewYork">New York, NY</option>
+            <option value="LosAngeles">Los Angeles, CA</option>
+            <option value="Chicago">Chicago, IL</option>
+            <option value="Houston">Houston, TX</option>
+            <option value="Phoneix">Phoenix, AZ</option>
+            <option value="Philadelphia">Philadelphia, PA</option>
+            <option value="SanAntonio">San Antonio, TX</option>
+            <option value="SanDiego">San Diego, CA</option>
+            <option value="Dallas">Dallas, TX</option>
+            <option value="SanJose">San Jose, CA</option>
+        </select>
+    </div> 
+    <div id="search-container">
+        <input type="text" id="search-box" placeholder="Location Search">
+        <button id="search-button">search</button>
+    </div>
+    <div id="detail_popup">
+        <div id="close_button" onclick="closePopup()">X</div>
+        <div id="detail_map"></div>
+        <div id="detail_index">
+            <div class="index_container">
+                <div class="dot grocery"></div>
+                <div class="label">Grocery Market</div>
+            </div>
+            <div class="index_container">
+                <div class="dot package"></div>
+                <div class="label">Package Office</div>
+            </div>
+            <div class="index_container">
+                <div class="dot hospital"></div>
+                <div class="label">Hospital</div>
+            </div>
+            <div class="index_container">
+                <div class="dot community"></div>
+                <div class="label">Community Center</div>
+            </div>
+        </div>
+        <div id="detail_content"></div>
+    </div>
+    <div id="detail_button" onclick="toggleDetailPopup()">Detail</div>
     <div id="upperbar">
-        <div id="Main_name">Not on the Map</div>
-        <div id="Main_sub_name">: The Missing Link in Food Access</div>
+        <div id="Main_name">The Grocery Link</div>
+        <div id="Main_sub_name">: Mapping Food Deserts and Delivery Gaps</div>
         <div id="Main_tabs">
             <div class="Main_tab">About</div>
-            <div class="Main_tab">Suburbs</div>
-            <div class="Main_tab">Cities</div>
-            <div class="Main_tab">Beyond</div>
+            <div class="Main_tab">Food_Access_Analyzer</div>
+            <div class="Main_tab">Access_Story</div>
+            <div class="Main_tab">Potential_Approach</div>
         </div>
     </div>
     <div id="sidebar">
+        <button id="X">&times;</button>
         <div id="sidebar-content">
             <div class="Sidebar_Name"></div>
             <div class="Sidebar_Main_Content">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>
@@ -28,104 +165,176 @@
                 <div class="sub-button">Food</div>
                 <div class="sub-button">Reference</div>
             </div>
-            <div class="category"></div>
-            <iframe id="iframeContainer" src="Graph/index.html" title="Graph" sandbox="allow-scripts allow-same-origin"></iframe>
-            <img id="Food_desert" src="food_desert.png" alt="food_desert_research" />
-            <div id="Display_button">Map / Photo</div>
-            <div id="layercheckboxcontainer">
-                <div class="layer-checkbox-container">
-                    <label class="layer-checkbox-label">
-                    <input type="checkbox" id="undelivery-zone" class="layer-checkbox">
-                    <span class="layer-checkbox-text">Undelivery Zone</span>
-                    </label>
-                    <p class="layer-checkbox-description">Areas where grocery delivery is not available</p>
-                    <label class="layer-checkbox-label">
-                    <input type="checkbox" id="food-desert" class="layer-checkbox">
-                    <span class="layer-checkbox-text">Food Desert</span>
-                    </label>
-                    <p class="layer-checkbox-description">Areas where the nearest grocery store is more than 10 miles away</p>
-                    <label class="layer-checkbox-label">
-                    <input type="checkbox" id="1k-population" class="layer-checkbox">
-                    <span class="layer-checkbox-text">1K Population</span>
-                    </label>
-                    <p class="layer-checkbox-description">Areas with a population of over 1,000 residents</p>
+            <div id="story-navigation-container">
+                <div class="story-nav-controls">
+                    <button class="story-nav-arrow" id="prevStory">&lt;</button>
+                    <div class="story-circles-container" id="storyCirclesContainer">
+                        <!-- JavaScript에서 동적으로 생성됨 -->
+                    </div>
+                    <button class="story-nav-arrow" id="nextStory">&gt;</button>
                 </div>
+                <div class="story-content" id="storyContent">
+                    <!-- JavaScript에서 동적으로 생성되는 스토리 내용 -->
+                    <h3 class="story-title" id="storyTitle"></h3>
+                    <p class="story-description" id="storyDescription"></p>
+                </div>
+            </div>
+            <div class="category"></div>
+            <div class="image-container">
+                <div id="myGif">
+                <img class="myGif" src="Package_graph.gif" alt="GIF Image" width="100">
+                <span>Necessity&Growth of Delivery Services</span> <!-- 텍스트 -->
+                </div>
+            </div>
+            <div class="image-container">
+                <div id="Food_desert">
+                <img class="Food_desert" src="food_desert.png" alt="food_desert_research" width="100">
+                <span>Food Access Research Atals, USDA Economic Reserach Service</span> <!-- 텍스트 -->
+                </div>
+            </div>
+            <div id="layercheckboxcontainer">
+                <div id="report_container">
+                    <div id="report"></div>
+                    <!--<div id="report_title">Indicators</div>-->
+                </div>
+                <!--<div class="layer-checkbox-container">
+                    <span class="layer-checkbox-text">Access Void</span>
+                    <p class="layer-checkbox-description">Areas with sufficient population but limited access to fresh food due to the absence of grocery stores (10mi) and lack of delivery services.</p>
+                    <span class="layer-checkbox-text">Undelivery Zone</span>
+                    <p class="layer-checkbox-description">Areas where grocery delivery is not available</p>
+                    <span class="layer-checkbox-text">Food Desert</span>
+                    <p class="layer-checkbox-description">Areas where the nearest grocery store is more than 10 miles away</p>
+                    <span class="layer-checkbox-text">1K Population</span>
+                    <p class="layer-checkbox-description">Areas with a population of over 1,000 residents</p>
+                </div>-->
+            </div>
+            <div id="categoryTitleContainer">
+                <div id="category_title">Factor Filters</div>
+                <div id="toggleButton">▼</div>
             </div>
             <div id="categoryContainer">
                 <div class="category-grid">
                     <label class="category-item">
                         <div class="category_flex">
-                            <input type="checkbox" name="category" value="income">
-                            <span class="category-title">Income Level</span>
-                        </div>
-                            <span class="category-desc">Areas with a poverty rate higher than the U.S. average of 11%</span>
-                        
-                    </label>
-                    <label class="category-item">
-                        <div class="category_flex">
-                        <input type="checkbox" name="category" value="transportation">
+                            <input type="checkbox" name="category" value="transportation">
                             <span class="category-title">Public Transportation</span>
-                        </div>
+                            <span class="info-icon">?</span>
                             <span class="category-desc">Areas without public transportation</span>
-                        
-                    </label>
-                    <label class="category-item">
-                        <div class="category_flex">
-                        <input type="checkbox" name="category" value="road">
-                            <span class="category-title">Road Infrastructure</span>
                         </div>
+                    </label>
+                
+                    <label class="category-item">
+                        <div class="category_flex">
+                            <input type="checkbox" name="category" value="road">
+                            <span class="category-title">Road Infrastructure</span>
+                            <span class="info-icon">?</span>
                             <span class="category-desc">Areas where roads are unpaved</span>
-                        
+                        </div>
                     </label>
+                
                     <label class="category-item">
                         <div class="category_flex">
-                        <input type="checkbox" name="category" value="restaurant">
+                            <input type="checkbox" name="category" value="restaurant">
                             <span class="category-title">Restaurants and Cafe</span>
-                        </div>    
-                        <span class="category-desc">Areas without restaurants or cafés</span>
-                        
+                            <span class="info-icon">?</span>
+                            <span class="category-desc">Areas without restaurants or cafés</span>
+                        </div>
                     </label>
+                
                     <label class="category-item">
                         <div class="category_flex">
-                        <input type="checkbox" name="category" value="agriculture">
+                            <input type="checkbox" name="category" value="agriculture">
                             <span class="category-title">Agricultural Land</span>
-                        </div>    
-                        <span class="category-desc">Areas surrounded by farmland</span>
-                        
+                            <span class="info-icon">?</span>
+                            <span class="category-desc">Areas surrounded by farmland</span>
+                        </div>
                     </label>
+                    
                     <label class="category-item">
                         <div class="category_flex">
-                        <input type="checkbox" name="category" value="distance">
-                            <span class="category-title">Distance, Nearest Urban</span>
-                        </div>    
-                        <span class="category-desc">Areas where the nearest city is more than 100 miles away</span>
-                        
+                            <input type="checkbox" name="category" value="grocery">
+                            <span class="category-title">Distant Grocery</span>
+                            <span class="info-icon">?</span>
+                            <span class="category-desc">Areas where the nearest grocery market is more than 15 miles away</span>
+                        </div>
                     </label>
+
                     <label class="category-item">
                         <div class="category_flex">
-                        <input type="checkbox" name="category" value="barriers">
+                            <input type="checkbox" name="category" value="barriers">
                             <span class="category-title">Geographical Barriers</span>
-                        </div>    
-                        <span class="category-desc">Areas blocked by natural features such as mountains and rivers</span>
-                        
+                            <span class="info-icon">?</span>
+                            <span class="category-desc">Areas blocked by natural features such as mountains and rivers</span>
+                        </div>
                     </label>
+    
                     <label class="category-item">
                         <div class="category_flex">
-                        <input type="checkbox" name="category" value="grocery">
-                            <span class="category-title">More Remote Grocery</span>
-                        </div>    
-                        <span class="category-desc">Areas where the nearest grocery market is more than 15 miles away</span>
-                        
-                    </label>
-                    <label class="category-item">
-                        <div class="category_flex">
-                        <input type="checkbox" name="category" value="Facilities">
+                            <input type="checkbox" name="category" value="Facilities">
                             <span class="category-title">Essential Facilities</span>
-                        </div>    
-                        <span class="category-desc">Areas without essential facilities like hospitals, post offices, or community centers</span>
-                        
+                            <span class="info-icon">?</span>
+                            <span class="category-desc">Areas without essential facilities (hospitals, post offices, or community centers)</span>   
+                        </div>
+                    </label>
+
+                    <label class="category-item">
+                        <div class="category_flex">
+                            <input type="checkbox" name="category" value="distance">
+                            <span class="category-title">Far from Urban</span>
+                            <span class="info-icon">?</span>
+                            <span class="category-desc">Areas where the nearest city is more than 100 miles away</span>
+                        </div>
+                    </label>
+
+                </div>
+            </div>
+            <div id="categoryContainer_city">
+                <div id="category_title_city">City List</div>
+                <div class="checkbox-container_city">
+                    <label>
+                        <input type="checkbox" name="city" value="NewYork"> New York, NY
+                    </label>
+                    <label>
+                        <input type="checkbox" name="city" value="LosAngeles"> Los Angeles, CA
+                    </label>
+                    <label>
+                        <input type="checkbox" name="city" value="Chicago"> Chicago, IL
+                    </label>
+                    <label>
+                        <input type="checkbox" name="city" value="Houston"> Houston, TX
+                    </label>
+                    <label>
+                        <input type="checkbox" name="city" value="Phoenix"> Phoenix, AZ
+                    </label>
+                    <label>
+                        <input type="checkbox" name="city" value="Philadelphia"> Philadelphia, PA
+                    </label>
+                    <label>
+                        <input type="checkbox" name="city" value="SanAntonio"> San Antonio, TX
+                    </label>
+                    <label>
+                        <input type="checkbox" name="city" value="SanDiego"> San Diego, CA
+                    </label>
+                    <label>
+                        <input type="checkbox" name="city" value="Dallas"> Dallas, TX
+                    </label>
+                    <label>
+                        <input type="checkbox" name="city" value="SanJose"> San Jose, CA
                     </label>
                 </div>
+            </div>
+                 
+            <div id="report_container_city">
+                <div id="report_city"></div>
+                <!--<div id="report_title_city">Indicators</div>
+                <div class="layer-checkbox-container_city">
+                    <span class="layer-checkbox-text">Vulnerable Zone</span>
+                    <p class="layer-checkbox-description">Areas where access to grocery stores is limited, coupled with a high poverty rate, making residents more likely to face financial barriers and unable to afford grocery delivery services due to the high delivery fees.</p>
+                    <span class="layer-checkbox-text">Poverty</span>
+                    <p class="layer-checkbox-description">Areas with a poverty rate of 20% or higher</p>
+                    <span class="layer-checkbox-text">Food Desert</span>
+                    <p class="layer-checkbox-description">Areas where the nearest grocery store is more than 1 miles away</p>
+                </div> -->
             </div>
             <div class="sub-content">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                 Where does it come from?
@@ -138,6 +347,7 @@
       </div>
     <div id="Main_map"></div>
     <div id="Cities_map"></div>
+    
     <script src="https://api.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.js"></script>
     <script src="script.js"></script>
 </body>

@@ -5,7 +5,17 @@ body, html {
     height: 100%;
 }
 
-#map {
+#detail_map {
     width: 100%;
     height: 100vh;
+}
+#saturation-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0);  /* 투명한 흰색 오버레이 */
+    mix-blend-mode: saturation; /* 채도를 높이는 효과 */
+    pointer-events: none; /* 지도 클릭 가능하도록 */
 }
