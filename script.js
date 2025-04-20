@@ -1341,7 +1341,8 @@ function resetDisplayButton() {
         const statesButton = document.getElementById("states-dropdown-container");
         const storyNavigation = document.getElementById("story-navigation-container")
         const categoryContainer = document.getElementById("categoryContainer")
-       
+        const GroupDelivery = document.getElementById("GroupDelivery")
+        const GroupDeliveryOrder = document.getElementById("GroupDelivery_Order")
         // 모든 스토리 관련 컨테이너 제거 함수
         function cleanupAllStoryContainers() {
             console.log("Cleaning up all story containers");
@@ -1382,6 +1383,10 @@ function resetDisplayButton() {
             if (mainMap) {
                 mainMap.style.display = "block";
             }
+            const groupDelivery = document.getElementById('GroupDelivery');
+            if (groupDelivery) {
+                groupDelivery.style.display = "none";
+            }
         }
 
         // Main 탭별 콘텐츠 설정
@@ -1415,8 +1420,8 @@ function resetDisplayButton() {
                     "Usage": "Group Delivery1",
                  }
             },
-            "Potential_Approach": {
-                name: "Potential_Approach",
+            "Potential_Implementation": {
+                name: "Potential_Implementation",
                 content: "<strong>Group Delivery System</strong> \nA Community-Based Approach to Improving Food Access\n\nHaving explored the complexity of food access issues through The Grocery Link tool, it's time to consider innovative approaches to address these challenges. While food deserts and delivery service gaps affect many communities, group delivery systems represent one practical solution that can help mitigate these problems.",
                 subButtons: ["Overview", "Usage"],
                 subContent: {
@@ -1661,7 +1666,16 @@ function resetDisplayButton() {
                             if (button.textContent.trim() !== "Vulnerable_Zone") {
                                 resetCitySliders();
                             }
-                            
+                            if (buttonText === "Usage") {
+                                if (selectedTab === "Potential_Implementation") {
+                                GroupDeliveryOrder.style.display = "Block";
+                                GroupDelivery.style.display = "none";
+                                }}
+                            if (buttonText === "Overview") {
+                                if (selectedTab === "Potential_Implementation") {
+                                GroupDeliveryOrder.style.display = "none";
+                                GroupDelivery.style.display = "block";
+                                }}
                             
                             
                         });
@@ -1714,11 +1728,13 @@ function resetDisplayButton() {
                         statesButton.style.display = "block";
                         storyNavigation.style.display = "none";
                         subContent.style.display= "block";
+                        GroupDelivery.style.display = "none";
+                        GroupDeliveryOrder.style.display = "none";
                     } else {
                         layercheck.style.display = "none";
                     }
                    
-                    if (selectedTab =="Potential_Approach") {
+                    if (selectedTab =="Potential_Implementation") {
                         X.style.display = "none";
                          // 🔹 opacity 변경 기능 추가
                          const layersToChange = ['delivery', 'food', 'demography', 'Access_Void'];
@@ -1732,6 +1748,8 @@ function resetDisplayButton() {
                         storyNavigation.style.display = "none";
                         subContent.style.display= "block";
                         subButtonsContainer.style.display ="flex";
+                        GroupDelivery.style.display = "block";
+                        GroupDeliveryOrder.style.display = "none";
                     }
 
                     if (selectedTab =="About") {
@@ -1751,6 +1769,8 @@ function resetDisplayButton() {
                         statesButton.style.display = "none";
                         subContent.style.display= "block";
                         categoryContainer = style.display = "none";
+                        GroupDelivery.style.display = "none";
+                        GroupDeliveryOrder.style.display = "none";
                     }
 
                     if (selectedTab === "Access_Story") {
@@ -1765,6 +1785,8 @@ function resetDisplayButton() {
                         citiesMap.style.display = "none";
                         subContent.style.display= "none";
                         categoryContainer.style.display = "none";
+                        GroupDelivery.style.display = "none";
+                        GroupDeliveryOrder.style.display = "none";
                         
                          // 새로 추가: 항상 스토리를 처음부터 시작
                         resetStoryToBeginning();
@@ -7007,9 +7029,120 @@ console.log("Executing Story 9...");
     
     console.log("Story 9 initialization complete");
     break;
-        case 10:
-            // 결론 단계
-            break;
+    case 10:
+        // 모든 그래프 제거
+        removeStoryGraphs();    
+        console.log("Executing Story 10 - Group Delivery Solution");
+        
+        // 1. First, hide other containers
+        const mainMapContainer10 = document.getElementById('Main_map');
+        if (mainMapContainer10) {
+            mainMapContainer10.style.display = "none";
+            console.log("Main map container hidden for story 10");
+        }
+    
+        // Hide story 5 grid if it exists
+        const story5Grid10 = document.getElementById('story5-grid');
+        if (story5Grid10) {
+            story5Grid10.style.display = 'none';
+            console.log("Story 5 grid hidden for story 10");
+        }
+        
+        // Hide story 4 container if it exists
+        const story4Container10 = document.getElementById('story4-container');
+        if (story4Container10) {
+            story4Container10.style.display = 'none';
+            console.log("Story 4 container hidden for story 10");
+        }
+        
+        // Hide story 8 container if it exists
+        const story8Container10 = document.getElementById('story8-container');
+        if (story8Container10) {
+            story8Container10.style.display = 'none';
+            console.log("Story 8 container hidden for story 10");
+        }
+        
+        // Hide story 9 container if it exists
+        const story9Container10 = document.getElementById('story9-container');
+        if (story9Container10) {
+            story9Container10.style.display = 'none';
+            console.log("Story 9 container hidden for story 10");
+        }
+    
+        // 2. GroupDelivery 요소 표시
+        const groupDelivery = document.getElementById('GroupDelivery');
+        if (groupDelivery) {
+            // GroupDelivery 요소 표시
+            groupDelivery.style.display = 'block';
+            console.log("GroupDelivery element displayed for story 10");
+        } else {
+            console.error("GroupDelivery element not found");
+        }
+        
+        // 3. Story navigation event handlers
+        const hideStory10Container = () => {
+            console.log("Hiding GroupDelivery for story 10");
+            const groupDelivery = document.getElementById('GroupDelivery');
+            if (groupDelivery) {
+                groupDelivery.style.display = "none";
+            }
+            
+            // Show main map again
+            if (mainMapContainer10) {
+                mainMapContainer10.style.display = "block";
+            }
+        };
+        
+        // Add navigation handlers
+        const prevButton10 = document.getElementById('prevStory');
+        const nextButton10 = document.getElementById('nextStory');
+        
+        if (prevButton10) {
+            if (prevButton10._story10Handler) {
+                prevButton10.removeEventListener('click', prevButton10._story10Handler);
+            }
+            prevButton10._story10Handler = hideStory10Container;
+            prevButton10.addEventListener('click', prevButton10._story10Handler);
+            console.log("Added prev button handler for story 10");
+        }
+        
+        if (nextButton10) {
+            if (nextButton10._story10Handler) {
+                nextButton10.removeEventListener('click', nextButton10._story10Handler);
+            }
+            nextButton10._story10Handler = hideStory10Container;
+            nextButton10.addEventListener('click', nextButton10._story10Handler);
+            console.log("Added next button handler for story 10");
+        }
+        
+        // Add handlers to story circles
+        const storyCircles10 = document.querySelectorAll('.story-circle');
+        storyCircles10.forEach(circle => {
+            const index = parseInt(circle.getAttribute('data-index'));
+            if (index !== 10) { // Skip current story
+                if (circle._story10Handler) {
+                    circle.removeEventListener('click', circle._story10Handler);
+                }
+                circle._story10Handler = hideStory10Container;
+                circle.addEventListener('click', circle._story10Handler);
+            }
+        });
+        
+        // 4. Hide main map layers (cleanup)
+        if (Main_map) {
+            const layersToChange = ['delivery', 'food', 'demography', 'Access_Void'];
+            layersToChange.forEach(layer => {
+                try {
+                    Main_map.setPaintProperty(layer, 'fill-opacity', 0);
+                    Main_map.setPaintProperty(`${layer}-outline`, 'line-opacity', 0);
+                } catch (e) {
+                    console.error(`Error hiding main map layer ${layer} for story 10:`, e);
+                }
+            });
+        }
+        
+        console.log("Story 10 (Group Delivery) initialization complete");
+        break;
     }
 }
 

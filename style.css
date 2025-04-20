@@ -1692,3 +1692,55 @@ left: 20px;
         max-width: 200px;
     }
 }
+
+#GroupDelivery {
+    width: 80vw;
+    height: 92vh;
+    left: 0vw;
+    top:10vh;
+    position: absolute;
+    z-index: 200;
+    display:none;
+}
+
+#Tool {
+    display: flex;           /* Flexbox 활성화 */
+    flex-direction: row;     /* 가로 방향으로 배치 (기본값이라 생략 가능) */
+    justify-content: center;  /* 아이템 사이에 균등한 간격 배치 */
+    align-items: center;     /* 세로 축에서 중앙 정렬 */
+    
+  }
+  
+  #Tool img {
+    height:88vh;
+    width: auto;
+    margin: 0 -10px;          /* 이미지 사이 여백 (선택 사항) */
+  }
+
+  .GroupDelivery_4 {
+    margin-right: 10px !important;      /* 오른쪽 여백 추가 (값은 원하는 간격에 따라 조정) */
+}
+
+#GroupDelivery_Order {
+    width: 80vw;
+    height: 92vh;
+    left: 0vw;
+    top:10vh;
+    position: absolute;
+    z-index: 200;
+    display:none;
+}
+
+#Tool_Order {
+    display: flex;           /* Flexbox 활성화 */
+    flex-direction: row;     /* 가로 방향으로 배치 (기본값이라 생략 가능) */
+    justify-content: center;  /* 아이템 사이에 균등한 간격 배치 */
+    align-items: center;  
+}
+
+/* 하단 이미지들 스타일 */
+#Tool_Order img {
+    height:88vh;
+    width: auto;
+    margin: 0 -10px; 
+}
