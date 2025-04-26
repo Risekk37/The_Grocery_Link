@@ -7030,54 +7030,57 @@ console.log("Executing Story 9...");
     console.log("Story 9 initialization complete");
     break;
     case 10:
-        // 모든 그래프 제거
-        removeStoryGraphs();    
-        console.log("Executing Story 10 - Group Delivery Solution");
-        
-        // 1. First, hide other containers
-        const mainMapContainer10 = document.getElementById('Main_map');
-        if (mainMapContainer10) {
-            mainMapContainer10.style.display = "none";
-            console.log("Main map container hidden for story 10");
-        }
+    // 모든 그래프 제거
+    removeStoryGraphs();    
+    console.log("Executing Story 10 - Group Delivery Solution");
     
-        // Hide story 5 grid if it exists
-        const story5Grid10 = document.getElementById('story5-grid');
-        if (story5Grid10) {
-            story5Grid10.style.display = 'none';
-            console.log("Story 5 grid hidden for story 10");
-        }
-        
-        // Hide story 4 container if it exists
-        const story4Container10 = document.getElementById('story4-container');
-        if (story4Container10) {
-            story4Container10.style.display = 'none';
-            console.log("Story 4 container hidden for story 10");
-        }
-        
-        // Hide story 8 container if it exists
-        const story8Container10 = document.getElementById('story8-container');
-        if (story8Container10) {
-            story8Container10.style.display = 'none';
-            console.log("Story 8 container hidden for story 10");
-        }
-        
-        // Hide story 9 container if it exists
-        const story9Container10 = document.getElementById('story9-container');
-        if (story9Container10) {
-            story9Container10.style.display = 'none';
-            console.log("Story 9 container hidden for story 10");
-        }
+    // 1. First, hide other containers
+    const mainMapContainer10 = document.getElementById('Main_map');
+    if (mainMapContainer10) {
+        mainMapContainer10.style.display = "none";
+        console.log("Main map container hidden for story 10");
+    }
+
+    // Hide story 5 grid if it exists
+    const story5Grid10 = document.getElementById('story5-grid');
+    if (story5Grid10) {
+        story5Grid10.style.display = 'none';
+        console.log("Story 5 grid hidden for story 10");
+    }
     
-        // 2. GroupDelivery 요소 표시
-        const groupDelivery = document.getElementById('GroupDelivery');
-        if (groupDelivery) {
-            // GroupDelivery 요소 표시
-            groupDelivery.style.display = 'block';
-            console.log("GroupDelivery element displayed for story 10");
-        } else {
-            console.error("GroupDelivery element not found");
-        }
+    // Hide story 4 container if it exists
+    const story4Container10 = document.getElementById('story4-container');
+    if (story4Container10) {
+        story4Container10.style.display = 'none';
+        console.log("Story 4 container hidden for story 10");
+    }
+    
+    // Hide story 8 container if it exists
+    const story8Container10 = document.getElementById('story8-container');
+    if (story8Container10) {
+        story8Container10.style.display = 'none';
+        console.log("Story 8 container hidden for story 10");
+    }
+    
+    // Hide story 9 container if it exists
+    const story9Container10 = document.getElementById('story9-container');
+    if (story9Container10) {
+        story9Container10.style.display = 'none';
+        console.log("Story 9 container hidden for story 10");
+    }
+
+    // 2. GroupDelivery 요소 표시
+    const groupDelivery = document.getElementById('GroupDelivery');
+    if (groupDelivery) {
+        // GroupDelivery 요소 표시
+        groupDelivery.style.display = 'block';
+        console.log("GroupDelivery element displayed for story 10");
+        
+        // 여기에 새로 추가: 반응형 조정 함수 호출
+        adjustGroupDeliveryContainer();
+    } else {
+        console.error("GroupDelivery element not found");
+    }
         
         // 3. Story navigation event handlers
         const hideStory10Container = () => {
@@ -7666,6 +7669,8 @@ document.addEventListener("DOMContentLoaded", function() {
     buttonContainer.style.bottom = '80px';
     buttonContainer.style.left = '80px';
     buttonContainer.style.zIndex = '6'; // 랜딩 페이지보다 위에 표시
+    buttonContainer.style.display = 'flex'; // 버튼을 가로로 나란히 표시
+    buttonContainer.style.gap = '20px'; // 버튼 사이 간격
     
     // "Go to the Tool" 버튼 생성
     const goToToolButton = document.createElement('button');
@@ -7681,6 +7686,37 @@ document.addEventListener("DOMContentLoaded", function() {
     goToToolButton.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3)';
     goToToolButton.style.transition = 'all 0.3s ease';
     
+
+    // "Go to the Story" 버튼 생성
+    const goToStoryButton = document.createElement('button');
+    goToStoryButton.textContent = 'Go to the Story →';
+    goToStoryButton.style.padding = '12px 24px';
+    goToStoryButton.style.fontSize = '18px';
+    goToStoryButton.style.fontWeight = 'bold';
+    goToStoryButton.style.backgroundColor = '#03748a'; // 다른 색상 사용
+    goToStoryButton.style.color = 'white';
+    goToStoryButton.style.border = 'none';
+    goToStoryButton.style.borderRadius = '5px';
+    goToStoryButton.style.cursor = 'pointer';
+    goToStoryButton.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3)';
+    goToStoryButton.style.transition = 'all 0.3s ease';
+
+    // 버튼 호버 효과
+    goToStoryButton.onmouseover = function() {
+        this.style.backgroundColor = '#0498b5';
+        this.style.transform = 'translateY(-2px)';
+        this.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.4)';
+    };
+
+    goToStoryButton.onmouseout = function() {
+        this.style.backgroundColor = '#03748a';
+        this.style.transform = 'translateY(0)';
+        this.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3)';
+    };
+
+    // 버튼 클릭 시 Story 페이지로 이동
+    goToStoryButton.addEventListener('click', navigateToStoryPage);
+
     // 버튼 호버 효과
     goToToolButton.onmouseover = function() {
         this.style.backgroundColor = '#cd4e1c';
@@ -7704,6 +7740,7 @@ document.addEventListener("DOMContentLoaded", function() {
     landingPage.addEventListener('click', function(event) {
         // 버튼, 텍스트, 이미지 클릭 시 제외
         if (event.target !== goToToolButton && 
+            event.target !== goToStoryButton && // 스토리 버튼도 제외
             event.target !== grid1 && 
             event.target !== grid2 && 
             !textContainer.contains(event.target)) {
@@ -7742,6 +7779,38 @@ document.addEventListener("DOMContentLoaded", function() {
             if (mainMap) mainMap.style.display = 'block';
         }, 500);
     }
+
+    // Story 페이지로 이동하는 함수 추가
+    function navigateToStoryPage() {
+        // 랜딩 페이지 페이드아웃 효과
+        landingPage.style.transition = 'opacity 0.5s ease';
+        landingPage.style.opacity = '0';
+        
+        // 트랜지션 완료 후 페이지 제거 및 Story 탭 활성화
+        setTimeout(function() {
+            // 랜딩 페이지 제거
+            landingPage.remove();
+            
+            // 메인 탭 표시 유지 및 Story 탭만 활성화
+            const storyTab = Array.from(document.querySelectorAll(".Main_tab")).find(tab => 
+                tab.textContent.trim() === "Access_Story"
+            );
+            
+            if (storyTab) {
+                // Story 탭 클릭해서 해당 콘텐츠 활성화
+                storyTab.click();
+            } else {
+                console.error("Story tab not found");
+            }
+            
+            // 사이드바 및 맵 표시
+            const sidebar = document.getElementById('sidebar');
+            const mainMap = document.getElementById('Main_map');
+            
+            if (sidebar) sidebar.style.display = 'block';
+            if (mainMap) mainMap.style.display = 'block';
+        }, 500);
+    }
     
     // 요소들을 컨테이너에 추가
     textContainer.appendChild(title);
@@ -7752,6 +7821,7 @@ document.addEventListener("DOMContentLoaded", function() {
     imagesContainer.appendChild(grid2);
     
     buttonContainer.appendChild(goToToolButton);
+    buttonContainer.appendChild(goToStoryButton);
     
     // 모든 요소를 랜딩 페이지에 추가
     landingPage.appendChild(backgroundImage);
@@ -7773,3 +7843,186 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
+
+// GroupDelivery 및 GroupDelivery_Order 컨테이너를 반응형으로 조정하는 함수
+function adjustGroupDeliveryContainer() {
+    const groupDelivery = document.getElementById('GroupDelivery');
+    const groupDeliveryOrder = document.getElementById('GroupDelivery_Order');
+    
+    if (!groupDelivery && !groupDeliveryOrder) return;
+    
+    // 사이드바와 메인 맵 요소 참조
+    const mainMap = document.getElementById('Main_map');
+    const sidebar = document.getElementById('sidebar');
+    
+    if (mainMap && sidebar) {
+      // 사용 가능한 너비 계산 (뷰포트 너비에서 사이드바 너비를 뺌)
+      const viewportWidth = window.innerWidth;
+      const sidebarWidth = sidebar.offsetWidth;
+      const availableWidth = viewportWidth - sidebarWidth;
+      
+      // GroupDelivery 컨테이너 조정
+     // GroupDelivery 컨테이너 조정
+     if (groupDelivery && groupDelivery.style.display !== 'none') {
+        // 컨테이너 너비 제한 및 스크롤 설정
+        groupDelivery.style.position = 'absolute';
+        groupDelivery.style.left = '0';
+        groupDelivery.style.top = '8vh';
+        groupDelivery.style.width = `${availableWidth}px`;
+        groupDelivery.style.maxWidth = `${availableWidth}px`;
+        groupDelivery.style.height = 'calc(100% - 8vh)';
+        groupDelivery.style.overflowY = 'auto';
+        groupDelivery.style.overflowX = 'hidden'; // 가로 스크롤 비활성화
+        groupDelivery.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+        groupDelivery.style.padding = '20px';
+        groupDelivery.style.boxSizing = 'border-box';
+        groupDelivery.style.zIndex = '100';
+        
+        // 세로 중앙 정렬을 위한 flex 스타일 추가
+        groupDelivery.style.display = 'flex';
+        groupDelivery.style.flexDirection = 'column';
+        groupDelivery.style.justifyContent = 'center'; // 세로 중앙 정렬
+        groupDelivery.style.alignItems = 'center'; // 가로 중앙 정렬
+        
+        // 내부 컨테이너 찾기
+        const toolContainer = groupDelivery.querySelector('#Tool');
+        if (toolContainer) {
+          // 원래 레이아웃 유지하되 크기만 조정
+          toolContainer.style.width = '100%';
+          toolContainer.style.display = 'flex';
+          toolContainer.style.flexWrap = 'wrap'; // 필요시 줄바꿈
+          toolContainer.style.justifyContent = 'center'; // 가로 중앙 정렬
+          toolContainer.style.alignItems = 'center'; // 세로 중앙 정렬
+          toolContainer.style.gap = '20px';
+          toolContainer.style.padding = '10px';
+        }
+        
+        // 모든 이미지를 찾아서 각각 설정
+        const images = groupDelivery.querySelectorAll('img');
+        
+        // 이미지 갯수에 따라 크기 조정
+        if (images.length > 0) {
+          // 한 줄에 들어갈 이미지 수 결정
+          let imagesPerRow = 2; // 기본값: 2개씩
+          
+          // 화면 크기에 따라 조정 
+          if (availableWidth > 1200) {
+            imagesPerRow = 4; // 넓은 화면에서는 4개 모두 표시
+          } else if (availableWidth > 768) {
+            imagesPerRow = 2; // 중간 크기 화면에서는 2개씩
+          } else {
+            imagesPerRow = 1; // 작은 화면에서는 1개씩
+          }
+          
+          // 각 이미지 너비 계산 (여백 고려)
+          const imageWidth = (100 / imagesPerRow) - 4; // 여백을 위해 약간 축소
+          
+          images.forEach(img => {
+            // 인라인 width 속성 제거
+            img.removeAttribute('width');
+            
+            // CSS 스타일 적용
+            img.style.width = `${imageWidth}%`;
+            img.style.maxWidth = `${imageWidth}%`;
+            img.style.height = 'auto';
+            img.style.boxSizing = 'border-box';
+            img.style.margin = '10px';
+            img.style.borderRadius = '8px';
+            img.style.boxShadow = '0 2px 6px rgba(0, 0, 0, 0.1)';
+            img.style.transition = 'transform 0.2s';
+          });
+        }
+      }
+      
+      // GroupDelivery_Order 컨테이너도 유사하게 처리
+      if (groupDeliveryOrder && groupDeliveryOrder.style.display !== 'none') {
+        // 컨테이너 너비 제한 및 스크롤 설정
+        groupDeliveryOrder.style.position = 'absolute';
+        groupDeliveryOrder.style.left = '0';
+        groupDeliveryOrder.style.top = '8vh';
+        groupDeliveryOrder.style.width = `${availableWidth}px`;
+        groupDeliveryOrder.style.maxWidth = `${availableWidth}px`;
+        groupDeliveryOrder.style.height = 'calc(100% - 8vh)';
+        groupDeliveryOrder.style.overflowY = 'auto';
+        groupDeliveryOrder.style.overflowX = 'hidden'; // 가로 스크롤 비활성화
+        groupDeliveryOrder.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+        groupDeliveryOrder.style.padding = '20px';
+        groupDeliveryOrder.style.boxSizing = 'border-box';
+        groupDeliveryOrder.style.zIndex = '100';
+        
+        // 세로 중앙 정렬을 위한 flex 스타일 추가
+        groupDeliveryOrder.style.display = 'flex';
+        groupDeliveryOrder.style.flexDirection = 'column';
+        groupDeliveryOrder.style.justifyContent = 'center'; // 세로 중앙 정렬
+        groupDeliveryOrder.style.alignItems = 'center'; // 가로 중앙 정렬
+        
+        // 내부 컨테이너 찾기
+        const toolOrderContainer = groupDeliveryOrder.querySelector('#Tool_Order');
+        if (toolOrderContainer) {
+          // 원래 레이아웃 유지하되 크기만 조정
+          toolOrderContainer.style.width = '100%';
+          toolOrderContainer.style.display = 'flex';
+          toolOrderContainer.style.flexWrap = 'wrap'; // 필요시 줄바꿈
+          toolOrderContainer.style.justifyContent = 'center'; // 가로 중앙 정렬
+          toolOrderContainer.style.alignItems = 'center'; // 세로 중앙 정렬
+          toolOrderContainer.style.gap = '20px';
+          toolOrderContainer.style.padding = '10px';
+        }
+        
+        // 모든 이미지를 찾아서 각각 설정
+        const images = groupDeliveryOrder.querySelectorAll('img');
+        
+        // 이미지 갯수에 따라 크기 조정
+        if (images.length > 0) {
+          // 한 줄에 들어갈 이미지 수 결정
+          let imagesPerRow = 2; // 기본값: 2개씩
+          
+          // 화면 크기에 따라 조정
+          if (availableWidth > 1200) {
+            imagesPerRow = 4; // 넓은 화면에서는 4개 모두 표시
+          } else if (availableWidth > 768) {
+            imagesPerRow = 2; // 중간 크기 화면에서는 2개씩
+          } else {
+            imagesPerRow = 1; // 작은 화면에서는 1개씩
+          }
+          
+          // 각 이미지 너비 계산 (여백 고려)
+          const imageWidth = (100 / imagesPerRow) - 4; // 여백을 위해 약간 축소
+          
+          images.forEach(img => {
+            // 인라인 width 속성 제거
+            img.removeAttribute('width');
+            
+            // CSS 스타일 적용
+            img.style.width = `${imageWidth}%`;
+            img.style.maxWidth = `${imageWidth}%`;
+            img.style.height = 'auto';
+            img.style.boxSizing = 'border-box';
+            img.style.margin = '10px';
+            img.style.borderRadius = '8px';
+            img.style.boxShadow = '0 2px 6px rgba(0, 0, 0, 0.1)';
+            img.style.transition = 'transform 0.2s';
+          });
+        }
+      }
+    }
+  }
+  // 페이지 로드 시 초기 설정
+document.addEventListener('DOMContentLoaded', function() {
+    // 초기에 GroupDelivery와 GroupDelivery_Order 요소 숨기기
+    const groupDelivery = document.getElementById('GroupDelivery');
+    const groupDeliveryOrder = document.getElementById('GroupDelivery_Order');
+    
+    if (groupDelivery) {
+      groupDelivery.style.display = 'none';
+    }
+    
+    if (groupDeliveryOrder) {
+      groupDeliveryOrder.style.display = 'none';
+    }
+  });
+
+  // 윈도우 크기 변경 및 페이지 로드 시 컨테이너 조정
+  window.addEventListener('resize', adjustGroupDeliveryContainer);
+  window.addEventListener('load', adjustGroupDeliveryContainer);
+  
